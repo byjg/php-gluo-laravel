@@ -1,0 +1,12 @@
+nbproject/private
+*~
+composer.lock
+vendor
+.idea/*
+!.idea/runConfigurations
+.phpunit.result.cache
+.phpunit.cache
+phpunit.xml
+phpunit.coverage.xml
+phpunit.report.xml
+*.bak

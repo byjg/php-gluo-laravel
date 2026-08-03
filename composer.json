@@ -1,0 +1,49 @@
+{
+  "name": "byjg/gluo-laravel",
+  "description": "Gluo for Laravel — pluggable connectors that adapt the ByJG components to Laravel. Install only the components you need; each connector activates itself. Ships OpenAPI contract testing and runtime validation on top of byjg/swagger-test.",
+  "type": "library",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=8.3 <8.6",
+    "ext-json": "*",
+    "illuminate/console": "^12.0|^13.0",
+    "illuminate/contracts": "^12.0|^13.0",
+    "illuminate/http": "^12.0|^13.0",
+    "illuminate/support": "^12.0|^13.0"
+  },
+  "require-dev": {
+    "byjg/swagger-test": "^7.0",
+    "orchestra/testbench": "^10.0|^11.0",
+    "phpunit/phpunit": "^11.5|^12.5",
+    "vimeo/psalm": "^6.13"
+  },
+  "suggest": {
+    "byjg/swagger-test": "Enables the `openapi` connector: OpenAPI contract testing and runtime request/response validation."
+  },
+  "autoload": {
+    "psr-4": {
+      "ByJG\\Gluo\\Laravel\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ByJGTest\\Gluo\\Laravel\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "ByJG\\Gluo\\Laravel\\GluoServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "psalm": "vendor/bin/psalm"
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
