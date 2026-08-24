@@ -6,7 +6,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": ">=8.3 <8.6",
+    "php": ">=8.3 <8.7",
     "ext-json": "*",
     "illuminate/console": "^12.0|^13.0",
     "illuminate/contracts": "^12.0|^13.0",
@@ -18,8 +18,7 @@
     "byjg/statemachine": "^7.0",
     "byjg/swagger-test": "^7.0",
     "orchestra/testbench": "^10.0|^11.0",
-    "phpunit/phpunit": "^11.5|^12.5",
-    "vimeo/psalm": "^6.13"
+    "phpunit/phpunit": "^12.5"
   },
   "suggest": {
     "byjg/statemachine": "Enables the `statemachine` connector: finite state machines declared as configuration and bound to your Eloquent models.",
@@ -44,7 +43,10 @@
   },
   "scripts": {
     "test": "vendor/bin/phpunit",
-    "psalm": "vendor/bin/psalm"
+    "psalm": [
+      "@composer --working-dir=tools/psalm update --no-interaction",
+      "tools/psalm/vendor/bin/psalm"
+    ]
   },
   "config": {
     "sort-packages": true

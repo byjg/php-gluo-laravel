@@ -6,7 +6,6 @@ vendor
 !.idea/runConfigurations
 .phpunit.result.cache
 .phpunit.cache
-phpunit.xml
 phpunit.coverage.xml
 phpunit.report.xml
 *.bak
