@@ -15,6 +15,7 @@ connectors you want:
 
 ```bash
 composer require byjg/swagger-test     # enables the `openapi` connector
+composer require byjg/statemachine     # enables the `statemachine` connector
 ```
 
 The service provider is discovered automatically; nothing needs to be added to
@@ -28,10 +29,11 @@ php artisan gluo:install
 
 This writes:
 
-| File                                | Contents                                              |
-|-------------------------------------|-------------------------------------------------------|
-| `config/gluo.php`                   | Connector registry and per-connector settings         |
-| `tests/Feature/ApiContractTest.php` | A working contract test to start from (`openapi` connector only) |
+| File                                           | Contents                                                           |
+|------------------------------------------------|--------------------------------------------------------------------|
+| `config/gluo.php`                              | Connector registry and per-connector settings                      |
+| `tests/Feature/ApiContractTest.php`            | A working contract test to start from (`openapi` connector)        |
+| `tests/Feature/StateMachineDefinitionTest.php` | Validates every declared machine (`statemachine` connector)        |
 
 Existing files are never overwritten unless you pass `--force`.
 
@@ -62,7 +64,8 @@ php artisan vendor:publish --tag=gluo-openapi    # the openapi connector's start
 
 ```php
 'connectors' => [
-    'openapi' => env('GLUO_CONNECTOR_OPENAPI', 'auto'),
+    'openapi'      => env('GLUO_CONNECTOR_OPENAPI', 'auto'),
+    'statemachine' => env('GLUO_CONNECTOR_STATEMACHINE', 'auto'),
 ],
 ```
 
@@ -113,6 +116,30 @@ When `true`, properties declared non-nullable may still hold `null`. Keep it `fa
 the contract strictly.
 
 The `validation.*` keys are described in [Runtime validation](runtime-validation.md).
+
+## The `statemachine` connector
+
+```php
+'statemachine' => [
+    'machines' => [
+        'order' => [
+            'enum' => App\Enums\OrderState::class,
+            'transitions' => [
+                ['from' => 'DRAFT', 'to' => 'PAID', 'condition' => App\Fsm\PaymentCleared::class],
+                ['from' => ['DRAFT', 'PAID'], 'to' => 'CANCELLED'],
+            ],
+        ],
+    ],
+],
+```
+
+Each machine is named here and reached by that name, through the manager or through a model:
+
+```php
+app(\ByJG\Gluo\Laravel\StateMachine\StateMachineManager::class)->machine('order');
+```
+
+The full key reference is in [State machines](state-machine.md).
 
 ## Generating the specification
 

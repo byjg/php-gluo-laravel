@@ -3,6 +3,7 @@
 namespace ByJGTest\Gluo\Laravel\Console;
 
 use ByJG\Gluo\Laravel\ApiTools\ApiToolsConnector;
+use ByJG\Gluo\Laravel\StateMachine\StateMachineConnector;
 use ByJGTest\Gluo\Laravel\TestCase;
 use Illuminate\Filesystem\Filesystem;
 use Override;
@@ -66,12 +67,41 @@ class InstallCommandTest extends TestCase
     {
         config()->set('gluo.connectors.openapi', false);
 
+        $this->artisan('gluo:install')->assertSuccessful();
+
+        $this->assertFileExists(config_path('gluo.php'));
+        $this->assertFileDoesNotExist($this->testPath());
+    }
+
+    public function testSaysSoWhenEveryConnectorIsDisabled(): void
+    {
+        config()->set('gluo.connectors.openapi', false);
+        config()->set('gluo.connectors.statemachine', false);
+
         $this->artisan('gluo:install')
             ->expectsOutputToContain('No connectors are active')
             ->assertSuccessful();
 
         $this->assertFileExists(config_path('gluo.php'));
         $this->assertFileDoesNotExist($this->testPath());
+        $this->assertFileDoesNotExist($this->stateMachineTestPath());
+    }
+
+    public function testEachConnectorPublishesItsOwnStarterFiles(): void
+    {
+        $this->artisan('gluo:install')->assertSuccessful();
+
+        $this->assertFileExists($this->testPath());
+        $this->assertFileExists($this->stateMachineTestPath());
+    }
+
+    public function testTheStateMachineConnectorDeclaresItsOwnPublishables(): void
+    {
+        $connector = new StateMachineConnector($this->app);
+
+        $this->assertSame('gluo-statemachine', StateMachineConnector::publishTag());
+        $this->assertSame([$this->stateMachineTestPath()], array_values($connector->publishables()));
+        $this->assertNotEmpty($connector->postInstallNotes());
     }
 
     public function testInstallsOnlyTheNamedConnector(): void
@@ -113,9 +143,15 @@ class InstallCommandTest extends TestCase
         return base_path('tests/Feature/ApiContractTest.php');
     }
 
+    private function stateMachineTestPath(): string
+    {
+        return base_path('tests/Feature/StateMachineDefinitionTest.php');
+    }
+
     private function removePublishedFiles(): void
     {
         $this->files->delete(config_path('gluo.php'));
         $this->files->delete($this->testPath());
+        $this->files->delete($this->stateMachineTestPath());
     }
 }

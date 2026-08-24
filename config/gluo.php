@@ -22,6 +22,9 @@ return [
 
         // byjg/swagger-test — OpenAPI contract testing and runtime validation
         'openapi' => env('GLUO_CONNECTOR_OPENAPI', 'auto'),
+
+        // byjg/statemachine — finite state machines bound to your models
+        'statemachine' => env('GLUO_CONNECTOR_STATEMACHINE', 'auto'),
     ],
 
     /*
@@ -80,6 +83,53 @@ return [
             // Status returned when the response does not match the contract.
             // A contract violation on the way out is a server-side defect.
             'response_error_status' => (int)env('GLUO_OPENAPI_RESPONSE_ERROR_STATUS', 500),
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | State Machines
+    |--------------------------------------------------------------------------
+    |
+    | Each machine is named here and asked for by that name, either through
+    | `app(StateMachineManager::class)->machine('order')` or by a model using
+    | the `HasStateMachine` trait.
+    |
+    | A definition is the plain array `FiniteStateMachine::fromDefinition()`
+    | reads, so this file is the definition — there is no separate format.
+    |
+    |   'enum'         the enum whose cases ARE the states. Required, and the
+    |                  reason a misspelled state is caught when the machine is
+    |                  built rather than on the transition nobody exercised.
+    |   'transitions'  each one declares `from` and `to`, optionally a
+    |                  `condition` and an `action` (class names, resolved
+    |                  through the container, so they may have dependencies),
+    |                  and a `name` when the same pair of states is joined more
+    |                  than once. `from` also accepts a list.
+    |
+    | The two flags are off by default, which is the component's own default:
+    | a move that is not allowed returns null rather than throwing, and the
+    | first matching transition wins.
+    |
+    |   'order' => [
+    |       'enum' => App\Enums\OrderState::class,
+    |       'transitions' => [
+    |           ['from' => 'DRAFT', 'to' => 'PAID',
+    |            'condition' => App\Fsm\PaymentCleared::class,
+    |            'action'    => App\Fsm\SendReceipt::class],
+    |           ['from' => 'PAID', 'to' => 'SHIPPED', 'condition' => App\Fsm\StockReserved::class],
+    |           ['from' => ['DRAFT', 'PAID'], 'to' => 'CANCELLED'],
+    |       ],
+    |       'throw_on_no_transition' => false,
+    |       'throw_on_ambiguity'     => false,
+    |   ],
+    |
+    */
+
+    'statemachine' => [
+
+        'machines' => [
+            //
         ],
     ],
 ];

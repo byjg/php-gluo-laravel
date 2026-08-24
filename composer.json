@@ -10,16 +10,19 @@
     "ext-json": "*",
     "illuminate/console": "^12.0|^13.0",
     "illuminate/contracts": "^12.0|^13.0",
+    "illuminate/database": "^12.0|^13.0",
     "illuminate/http": "^12.0|^13.0",
     "illuminate/support": "^12.0|^13.0"
   },
   "require-dev": {
+    "byjg/statemachine": "^7.0",
     "byjg/swagger-test": "^7.0",
     "orchestra/testbench": "^10.0|^11.0",
     "phpunit/phpunit": "^11.5|^12.5",
     "vimeo/psalm": "^6.13"
   },
   "suggest": {
+    "byjg/statemachine": "Enables the `statemachine` connector: finite state machines declared as configuration and bound to your Eloquent models.",
     "byjg/swagger-test": "Enables the `openapi` connector: OpenAPI contract testing and runtime request/response validation."
   },
   "autoload": {

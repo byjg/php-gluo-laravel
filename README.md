@@ -39,9 +39,10 @@ composer require byjg/swagger-test
 
 ### Available connectors
 
-| Connector | Component                                                            | What it gives you                                             |
-|-----------|----------------------------------------------------------------------|---------------------------------------------------------------|
-| `openapi` | [`byjg/swagger-test`](https://github.com/byjg/php-swagger-test)       | Contract testing through the Laravel kernel, plus a runtime validation middleware |
+| Connector      | Component                                                              | What it gives you                                                                 |
+|----------------|------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| `openapi`      | [`byjg/swagger-test`](https://github.com/byjg/php-swagger-test)         | Contract testing through the Laravel kernel, plus a runtime validation middleware  |
+| `statemachine` | [`byjg/statemachine`](https://github.com/byjg/php-statemachine)         | Machines declared as configuration, bound to your Eloquent models, validated in CI |
 
 More connectors are added over the same mechanism — see [Writing a connector](docs/writing-a-connector.md).
 
@@ -108,6 +109,35 @@ A response that violates it is logged and rejected with `500`, because that is a
 
 **[Runtime validation guide →](docs/runtime-validation.md)**
 
+### State machines
+
+Machines are declared as configuration and bound to the models they govern:
+
+```php
+class Order extends Model implements StatefulModel
+{
+    use HasStateMachine;
+
+    protected $casts = ['status' => OrderState::class];
+}
+```
+
+```php
+DB::transaction(function () use ($order, $data) {
+    $order->transitionTo(OrderState::Paid, $data);
+
+    $this->somethingElseThatMayThrow();      // rolls back: the receipt never goes out
+});
+```
+
+The move is persisted before its action runs, and the action is held until the transaction commits —
+so a side effect can never escape a write that was rolled back. Conditions and actions are resolved
+through the container, so they are ordinary services with ordinary dependencies, and a
+`CanTransitionTo` validation rule turns an illegal move requested by a client into a `422` instead
+of an exception.
+
+**[State machine guide →](docs/state-machine.md)**
+
 ## Requirements
 
 - PHP `>=8.3 <8.6`
@@ -118,6 +148,7 @@ A response that violates it is logged and rejected with `500`, because that is a
 - [Installation and configuration](docs/installation.md)
 - [Contract testing](docs/contract-testing.md)
 - [Runtime validation](docs/runtime-validation.md)
+- [State machines](docs/state-machine.md)
 - [Writing a connector](docs/writing-a-connector.md)
 
 ## Tests
@@ -134,6 +165,7 @@ vendor/bin/psalm
 flowchart TD
     byjg/gluo-laravel --> illuminate/support
     byjg/gluo-laravel -. optional .-> byjg/swagger-test
+    byjg/gluo-laravel -. optional .-> byjg/statemachine
     byjg/swagger-test --> byjg/webrequest
 ```
 

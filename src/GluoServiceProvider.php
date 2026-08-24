@@ -6,6 +6,7 @@ use ByJG\Gluo\Laravel\ApiTools\ApiToolsConnector;
 use ByJG\Gluo\Laravel\Connector\Connector;
 use ByJG\Gluo\Laravel\Console\InstallCommand;
 use ByJG\Gluo\Laravel\Exception\ConnectorNotAvailableException;
+use ByJG\Gluo\Laravel\StateMachine\StateMachineConnector;
 use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Support\ServiceProvider;
 use Override;
@@ -38,6 +39,7 @@ class GluoServiceProvider extends ServiceProvider
      */
     protected array $connectors = [
         ApiToolsConnector::class,
+        StateMachineConnector::class,
     ];
 
     #[Override]
