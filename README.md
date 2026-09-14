@@ -159,15 +159,5 @@ vendor/bin/phpunit
 vendor/bin/psalm
 ```
 
-## Dependencies
-
-```mermaid
-flowchart TD
-    byjg/gluo-laravel --> illuminate/support
-    byjg/gluo-laravel -. optional .-> byjg/swagger-test
-    byjg/gluo-laravel -. optional .-> byjg/statemachine
-    byjg/swagger-test --> byjg/webrequest
-```
-
 ----
 [Open source ByJG](http://opensource.byjg.com)
