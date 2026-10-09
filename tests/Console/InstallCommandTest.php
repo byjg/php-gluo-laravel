@@ -1,10 +1,10 @@
 <?php
 
-namespace ByJGTest\Gluo\Laravel\Console;
+namespace Tests\Console;
 
 use ByJG\Gluo\Laravel\ApiTools\ApiToolsConnector;
 use ByJG\Gluo\Laravel\StateMachine\StateMachineConnector;
-use ByJGTest\Gluo\Laravel\TestCase;
+use Tests\TestCase;
 use Illuminate\Filesystem\Filesystem;
 use Override;
 

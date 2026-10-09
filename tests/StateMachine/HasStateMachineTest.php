@@ -1,12 +1,12 @@
 <?php
 
-namespace ByJGTest\Gluo\Laravel\StateMachine;
+namespace Tests\StateMachine;
 
 use ByJG\Gluo\Laravel\Exception\StateMachineNotFoundException;
 use ByJG\StateMachine\TransitionException;
-use ByJGTest\Gluo\Laravel\Fixture\Order;
-use ByJGTest\Gluo\Laravel\Fixture\OrderState;
-use ByJGTest\Gluo\Laravel\Fixture\Shipment;
+use Tests\Fixture\Order;
+use Tests\Fixture\OrderState;
+use Tests\Fixture\Shipment;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
 

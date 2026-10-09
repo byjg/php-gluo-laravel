@@ -5,17 +5,18 @@ tags: [php, laravel, openapi, testing]
 
 # Gluo for Laravel
 
-[![Sponsor](https://img.shields.io/badge/Sponsor-%23ea4aaa?logo=githubsponsors&logoColor=white&labelColor=0d1117)](https://github.com/sponsors/byjg)
-[![Build Status](https://github.com/byjg/php-gluo-laravel/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-gluo-laravel/actions/workflows/phpunit.yml)
-[![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
-[![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/php-gluo-laravel)
-[![GitHub license](https://img.shields.io/github/license/byjg/php-gluo-laravel.svg)](https://opensource.byjg.com/license/)
-[![GitHub release](https://img.shields.io/github/release/byjg/php-gluo-laravel.svg)](https://github.com/byjg/php-gluo-laravel/releases)
-
 **Gluo** (Esperanto for *glue*) is a family of packages that bind the ByJG components together.
 This one is the **Laravel connector**: it adapts those components to Laravel idioms — service
 providers, configuration, middleware, artisan commands and test helpers — so you can drop them
 into an existing application without writing the plumbing yourself.
+
+[![Sponsor](https://img.shields.io/badge/Sponsor-%23ea4aaa?logo=githubsponsors&logoColor=white&labelColor=0d1117)](https://github.com/sponsors/byjg)
+[![Build Status](https://github.com/byjg/php-gluo-laravel/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-gluo-laravel/actions/workflows/phpunit.yml)
+[![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](https://opensource.byjg.com)
+[![Install MCP Server](https://img.shields.io/badge/Install-MCP_Server-8A2BE2?logo=modelcontextprotocol&logoColor=white)](https://opensource.byjg.com/docs/ai/mcpserver-byjg-docs/)
+[![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/php-gluo-laravel)
+[![GitHub license](https://img.shields.io/github/license/byjg/php-gluo-laravel.svg)](https://opensource.byjg.com/license/)
+[![GitHub release](https://img.shields.io/github/release/byjg/php-gluo-laravel.svg)](https://github.com/byjg/php-gluo-laravel/releases)
 
 | Package                                                        | Role                                                  |
 |----------------------------------------------------------------|-------------------------------------------------------|
@@ -151,13 +152,13 @@ of an exception.
 - [State machines](docs/state-machine.md)
 - [Writing a connector](docs/writing-a-connector.md)
 
-## Tests
+## Running Tests
 
 ```bash
 composer update
 vendor/bin/phpunit
-vendor/bin/psalm
+composer psalm
 ```
 
 ----
-[Open source ByJG](http://opensource.byjg.com)
+[Open source ByJG](https://opensource.byjg.com)

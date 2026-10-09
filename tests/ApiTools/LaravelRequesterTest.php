@@ -1,13 +1,13 @@
 <?php
 
-namespace ByJGTest\Gluo\Laravel\ApiTools;
+namespace Tests\ApiTools;
 
 use ByJG\ApiTools\Exception\InvalidRequestException;
 use ByJG\ApiTools\Exception\NotMatchedException;
 use ByJG\ApiTools\Exception\PathNotFoundException;
 use ByJG\ApiTools\Exception\StatusCodeNotMatchedException;
 use ByJG\Gluo\Laravel\ApiTools\Testing\InteractsWithOpenApi;
-use ByJGTest\Gluo\Laravel\TestCase;
+use Tests\TestCase;
 
 class LaravelRequesterTest extends TestCase
 {

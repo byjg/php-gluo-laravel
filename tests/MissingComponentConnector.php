@@ -1,6 +1,6 @@
 <?php
 
-namespace ByJGTest\Gluo\Laravel;
+namespace Tests;
 
 use ByJG\Gluo\Laravel\Connector\Connector;
 use Override;

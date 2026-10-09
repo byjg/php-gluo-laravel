@@ -1,13 +1,13 @@
 <?php
 
-namespace ByJGTest\Gluo\Laravel\StateMachine;
+namespace Tests\StateMachine;
 
-use ByJGTest\Gluo\Laravel\Fixture\OrderState;
-use ByJGTest\Gluo\Laravel\Fixture\PaymentCleared;
-use ByJGTest\Gluo\Laravel\Fixture\PaymentGateway;
-use ByJGTest\Gluo\Laravel\Fixture\ReceiptLog;
-use ByJGTest\Gluo\Laravel\Fixture\SendReceipt;
-use ByJGTest\Gluo\Laravel\TestCase;
+use Tests\Fixture\OrderState;
+use Tests\Fixture\PaymentCleared;
+use Tests\Fixture\PaymentGateway;
+use Tests\Fixture\ReceiptLog;
+use Tests\Fixture\SendReceipt;
+use Tests\TestCase;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Override;

@@ -1,6 +1,6 @@
 <?php
 
-namespace ByJGTest\Gluo\Laravel\Fixture;
+namespace Tests\Fixture;
 
 use ByJG\Gluo\Laravel\StateMachine\HasStateMachine;
 use ByJG\Gluo\Laravel\StateMachine\StatefulModel;

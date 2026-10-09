@@ -1,6 +1,6 @@
 <?php
 
-namespace ByJGTest\Gluo\Laravel\Fixture;
+namespace Tests\Fixture;
 
 /**
  * A collaborator the transition condition cannot build for itself, which is

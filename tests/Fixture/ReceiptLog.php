@@ -1,6 +1,6 @@
 <?php
 
-namespace ByJGTest\Gluo\Laravel\Fixture;
+namespace Tests\Fixture;
 
 /**
  * Records the side effects that actually ran, so a test can assert not only

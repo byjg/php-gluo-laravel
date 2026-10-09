@@ -18,7 +18,8 @@
     "byjg/statemachine": "^7.0",
     "byjg/swagger-test": "^7.0",
     "orchestra/testbench": "^10.0|^11.0",
-    "phpunit/phpunit": "^12.5"
+    "phpunit/phpunit": "^12.5",
+    "psalm/phar": "^6.16"
   },
   "suggest": {
     "byjg/statemachine": "Enables the `statemachine` connector: finite state machines declared as configuration and bound to your Eloquent models.",
@@ -31,7 +32,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "ByJGTest\\Gluo\\Laravel\\": "tests/"
+      "Tests\\": "tests/"
     }
   },
   "extra": {
@@ -43,10 +44,7 @@
   },
   "scripts": {
     "test": "vendor/bin/phpunit",
-    "psalm": [
-      "@composer --working-dir=tools/psalm update --no-interaction",
-      "tools/psalm/vendor/bin/psalm"
-    ]
+    "psalm": "vendor/bin/psalm.phar"
   },
   "config": {
     "sort-packages": true

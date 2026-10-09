@@ -1,6 +1,6 @@
 <?php
 
-namespace ByJGTest\Gluo\Laravel\StateMachine;
+namespace Tests\StateMachine;
 
 use ByJG\Gluo\Laravel\Exception\StateMachineNotFoundException;
 use ByJG\Gluo\Laravel\GluoServiceProvider;
@@ -8,7 +8,7 @@ use ByJG\Gluo\Laravel\StateMachine\StateMachineConnector;
 use ByJG\Gluo\Laravel\StateMachine\StateMachineManager;
 use ByJG\StateMachine\FiniteStateMachine;
 use ByJG\StateMachine\TransitionException;
-use ByJGTest\Gluo\Laravel\Fixture\OrderState;
+use Tests\Fixture\OrderState;
 
 class StateMachineManagerTest extends StateMachineTestCase
 {

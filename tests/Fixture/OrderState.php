@@ -1,6 +1,6 @@
 <?php
 
-namespace ByJGTest\Gluo\Laravel\Fixture;
+namespace Tests\Fixture;
 
 /**
  * The states of the fixture machine.

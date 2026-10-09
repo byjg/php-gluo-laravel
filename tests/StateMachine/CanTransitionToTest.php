@@ -1,10 +1,10 @@
 <?php
 
-namespace ByJGTest\Gluo\Laravel\StateMachine;
+namespace Tests\StateMachine;
 
 use ByJG\Gluo\Laravel\StateMachine\Rules\CanTransitionTo;
-use ByJGTest\Gluo\Laravel\Fixture\Order;
-use ByJGTest\Gluo\Laravel\Fixture\OrderState;
+use Tests\Fixture\Order;
+use Tests\Fixture\OrderState;
 use Illuminate\Support\Facades\Validator;
 
 class CanTransitionToTest extends StateMachineTestCase

@@ -1,9 +1,9 @@
 <?php
 
-namespace ByJGTest\Gluo\Laravel\ApiTools;
+namespace Tests\ApiTools;
 
 use ByJG\Gluo\Laravel\ApiTools\ApiToolsConnector;
-use ByJGTest\Gluo\Laravel\TestCase;
+use Tests\TestCase;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Override;

@@ -1,6 +1,6 @@
 <?php
 
-namespace ByJGTest\Gluo\Laravel;
+namespace Tests;
 
 use ByJG\ApiTools\Base\Schema;
 use ByJG\ApiTools\OpenApi\OpenApiSchema;
