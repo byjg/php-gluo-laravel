@@ -2,7 +2,6 @@
 
 namespace Tests\ApiTools;
 
-use ByJG\ApiTools\Exception\InvalidRequestException;
 use ByJG\ApiTools\Exception\NotMatchedException;
 use ByJG\ApiTools\Exception\PathNotFoundException;
 use ByJG\ApiTools\Exception\StatusCodeNotMatchedException;
@@ -166,8 +165,8 @@ class LaravelRequesterTest extends TestCase
             ->withRequestHeader(['Content-Type' => 'application/xml'])
             ->withRequestBody('<user><name>Jane</name></user>');
 
-        $this->expectException(InvalidRequestException::class);
-        $this->expectExceptionMessage("Cannot handle Content Type 'application/xml'");
+        $this->expectException(NotMatchedException::class);
+        $this->expectExceptionMessage("Content type 'application/xml' not found for POST /api/users");
 
         $this->sendRequest($request);
     }
