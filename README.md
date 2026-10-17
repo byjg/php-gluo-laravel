@@ -141,7 +141,7 @@ of an exception.
 
 ## Requirements
 
-- PHP `>=8.3 <8.6`
+- PHP `>=8.3 <8.7`
 - Laravel `^12.0` or `^13.0`
 
 ## Documentation
@@ -151,6 +151,12 @@ of an exception.
 - [Runtime validation](docs/runtime-validation.md)
 - [State machines](docs/state-machine.md)
 - [Writing a connector](docs/writing-a-connector.md)
+
+## Installation
+
+```bash
+composer require byjg/gluo-laravel
+```
 
 ## Running Tests
 

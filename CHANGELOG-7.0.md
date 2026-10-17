@@ -45,7 +45,6 @@ consumers on 8.6 are unaffected; only the test harness cannot run there yet.
 
 ## Continuous Integration
 
-- The build matrix now includes PHP 8.6.
 - The Psalm job runs on PHP 8.5.
 
 ## Housekeeping

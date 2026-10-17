@@ -125,13 +125,15 @@ class UserApiTest extends TestCase
 
 ## Content types
 
-Three request content types are matched against the specification:
+The request body is matched against the media type the operation documents for its
+`Content-Type`. This is how it reaches the controller:
 
 | Content-Type                        | In the controller                       |
 |-------------------------------------|-----------------------------------------|
 | `application/json` *(or none)*      | `$request->json()`, `$request->input()`  |
 | `application/x-www-form-urlencoded` | `$request->input()`                     |
 | `multipart/*`                       | raw body only — see below               |
+| any other, e.g. `application/xml`   | raw body, `$request->getContent()`      |
 
 When no `Content-Type` is declared the requester sends `application/json`, matching how
 `byjg/swagger-test` interprets that same body, so `$request->json()` behaves normally.
@@ -158,8 +160,9 @@ Two boundaries remain, both inherited from the layers underneath:
 - **`multipart/*` uploads reach the kernel as a raw body.** The specification is matched
   correctly, but Symfony does not rebuild `$_FILES` from raw content, so `$request->file()` will
   be empty. Test file uploads with Laravel's `UploadedFile::fake()` helpers instead.
-- **Any other content type is rejected** by `AbstractRequester` before reaching the kernel, with
-  `InvalidRequestException` — `application/xml`, for instance.
+- **A content type the operation does not document is rejected** by `AbstractRequester` before
+  reaching the kernel, with `NotMatchedException` — for instance
+  `Content type 'application/xml' not found for POST /api/users`.
 
 ## Under the hood
 

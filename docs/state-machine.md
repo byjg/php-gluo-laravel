@@ -118,6 +118,10 @@ $machine = app(StateMachineManager::class)->machine('order');
 $machine->canTransition(OrderState::Draft, OrderState::Paid, ['payment_id' => $id]);
 ```
 
+The manager also answers `names()` (every declared machine), `has($name)`, `enumOf($name)` (the
+enum class of its states) and `caseOf($name, $state)` (the enum case a state refers to). Asking for
+a name the configuration does not declare throws `StateMachineNotFoundException`.
+
 Each machine is built once per process. Building it validates the entire definition — every state
 name against the enum, every class name against its interface — so a mistake surfaces at startup
 rather than on the one transition nobody exercised.
@@ -157,6 +161,8 @@ $order->autoTransition($data);                            // ?State — whicheve
 
 `transitionTo()` and `autoTransition()` return `null` when the move is not allowed, and leave the
 model untouched. Nothing is written and no action runs.
+If the move is allowed but a model event vetoes the save (returns `false`), a
+`TransitionException` is thrown and the action does not run.
 
 ### Ordering, and why it is not your problem here
 
