@@ -1,0 +1,63 @@
+<?php
+
+namespace Tests\Feature;
+
+use ByJG\Gluo\Laravel\ApiTools\Testing\InteractsWithOpenApi;
+use Tests\TestCase;
+
+/**
+ * Contract tests: every call below is validated against the OpenAPI
+ * specification configured in `config/gluo.php`.
+ *
+ * The request body, the status code and the response body must all match the
+ * specification — otherwise the test fails with a ByJG\ApiTools exception
+ * describing exactly what diverged.
+ *
+ * No HTTP server is involved: requests go straight through the Laravel kernel,
+ * so the full middleware stack runs and you keep `actingAs()`, `RefreshDatabase`
+ * and every other Laravel testing helper.
+ */
+class ApiContractTest extends TestCase
+{
+    use InteractsWithOpenApi;
+
+    public function testListMatchesTheContract(): void
+    {
+        $request = $this->openApiRequest()
+            ->withMethod('GET')
+            ->withPath('/api/users')
+            ->expectStatus(200);
+
+        $this->sendRequest($request);
+    }
+
+    public function testCreateMatchesTheContract(): void
+    {
+        $request = $this->openApiRequest()
+            ->withMethod('POST')
+            ->withPath('/api/users')
+            ->withRequestBody([
+                'name' => 'John Doe',
+                'email' => 'john@example.com',
+            ])
+            ->expectStatus(201);
+
+        $this->sendRequest($request);
+    }
+
+    /**
+     * Authentication works exactly as in any other Laravel test — `actingAs()`
+     * applies to the request the requester dispatches through the kernel.
+     */
+    // public function testAuthenticatedRoute(): void
+    // {
+    //     $this->actingAs(User::factory()->create());
+    //
+    //     $request = $this->openApiRequest()
+    //         ->withMethod('GET')
+    //         ->withPath('/api/profile')
+    //         ->expectStatus(200);
+    //
+    //     $this->sendRequest($request);
+    // }
+}

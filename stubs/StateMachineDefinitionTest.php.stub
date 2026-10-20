@@ -1,0 +1,59 @@
+<?php
+
+namespace Tests\Feature;
+
+use ByJG\Gluo\Laravel\StateMachine\StateMachineManager;
+use Tests\TestCase;
+
+/**
+ * Checks every machine declared under `gluo.statemachine.machines`.
+ *
+ * Building a machine validates the whole definition — every state name against
+ * the enum, every condition and action class against its interface, every pair
+ * of states against the rule that says two moves joining the same pair must be
+ * told apart by a name. All of it raises a `TransitionException` here rather
+ * than in production, on the one transition nobody exercised.
+ *
+ * That makes this the cheapest test in the suite to keep: it needs no fixtures
+ * and no database, and it fails the moment a definition and the code it names
+ * drift apart.
+ */
+class StateMachineDefinitionTest extends TestCase
+{
+    public function testEveryMachineBuilds(): void
+    {
+        $manager = app(StateMachineManager::class);
+
+        $this->assertNotEmpty(
+            $manager->names(),
+            'No machines are declared under `gluo.statemachine.machines` in config/gluo.php.',
+        );
+
+        foreach ($manager->names() as $name) {
+            $manager->machine($name);
+        }
+    }
+
+    /**
+     * A state that no transition enters and none leaves is not part of the
+     * graph. Usually it is a case added to the enum and forgotten in the
+     * transition list, which nothing else would ever report.
+     */
+    public function testNoStateIsStrandedOutsideItsGraph(): void
+    {
+        $manager = app(StateMachineManager::class);
+
+        foreach ($manager->names() as $name) {
+            $machine = $manager->machine($name);
+            $enum = $manager->enumOf($name);
+
+            foreach ($enum::cases() as $case) {
+                $this->assertFalse(
+                    $machine->isInitialState($case) && $machine->isFinalState($case),
+                    "The machine '$name' never reaches or leaves $enum::{$case->name}: "
+                    . 'no transition mentions it.',
+                );
+            }
+        }
+    }
+}
