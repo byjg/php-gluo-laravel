@@ -1,5 +1,6 @@
 ---
 sidebar_key: gluo-laravel
+sidebar_category: gluo
 tags: [php, laravel, openapi, testing]
 ---
 
