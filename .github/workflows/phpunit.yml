@@ -21,11 +21,7 @@ jobs:
       fail-fast: false
       matrix:
         php-version:
-          # PHP 8.6 is excluded: orchestra/testbench pulls laravel/framework ->
-          # league/commonmark -> league/config -> nette/schema, which caps at
-          # php 8.1 - 8.5. The runtime dependencies themselves install on 8.6,
-          # so the composer constraint still allows it - only the test harness
-          # cannot run there yet.
+          - "8.6"
           - "8.5"
           - "8.4"
           - "8.3"
