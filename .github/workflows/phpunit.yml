@@ -12,6 +12,7 @@ on:
 
 jobs:
   Build:
+    name: Build (PHP ${{ matrix.php-version }}, Laravel ${{ matrix.laravel }})
     runs-on: 'ubuntu-latest'
     container:
       image: 'byjg/php:${{ matrix.php-version }}-cli'
@@ -21,19 +22,25 @@ jobs:
       fail-fast: false
       matrix:
         php-version:
-          # PHP 8.6 is excluded: orchestra/testbench pulls laravel/framework ->
-          # league/commonmark -> league/config -> nette/schema, which caps at
-          # php 8.1 - 8.5. The runtime dependencies themselves install on 8.6,
-          # so the composer constraint still allows it - only the test harness
-          # cannot run there yet.
+          - "8.6"
           - "8.5"
           - "8.4"
           - "8.3"
-        testbench:
-          # Laravel 12
-          - "^10.0"
-          # Laravel 13
-          - "^11.0"
+        laravel:
+          - "12"
+          - "13"
+        include:
+          # orchestra/testbench release line that pulls each Laravel version
+          - laravel: "12"
+            testbench: "^10.0"
+          - laravel: "13"
+            testbench: "^11.0"
+        exclude:
+          # Laravel 12 does not run on PHP 8.6: it calls the deprecated
+          # spl_object_hash() and its ArraySessionHandler lacks create_sid(),
+          # which PHP 8.6 raises as a warning. Laravel 13 fixes both.
+          - php-version: "8.6"
+            laravel: "12"
 
     steps:
       - uses: actions/checkout@v7
