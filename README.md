@@ -1,9 +1,12 @@
 ---
 sidebar_key: gluo-laravel
+sidebar_category: gluo
 tags: [php, laravel, openapi, testing]
 ---
 
 # Gluo for Laravel
+
+Use the ByJG components in Laravel with no effort: `composer require` a component, and its connector wires it into your application.
 
 **Gluo** (Esperanto for *glue*) is a family of packages that bind the ByJG components together.
 This one is the **Laravel connector**: it adapts those components to Laravel idioms — service
@@ -23,6 +26,22 @@ into an existing application without writing the plumbing yourself.
 | [`byjg/gluo`](https://github.com/byjg/php-gluo)                 | Scaffold for a standalone REST API project            |
 | [`byjg/gluo-core`](https://github.com/byjg/php-gluo-core)       | The common framework core shared by Gluo projects     |
 | **`byjg/gluo-laravel`**                                         | **Connectors for an existing Laravel application**    |
+
+## Why
+
+A standalone component still needs plumbing before Laravel can use it: a service provider,
+a config file, a middleware, an artisan command, test helpers. Writing that for every
+component is the work that keeps people from adopting it.
+
+Gluo for Laravel is that plumbing, already written. Its service provider is auto-discovered,
+and each connector switches itself on only when its component is installed:
+
+```bash
+composer require byjg/gluo-laravel byjg/swagger-test   # contract tests through the Laravel kernel
+php artisan gluo:install
+```
+
+It pulls in no ByJG component itself, so you install only the ones you use.
 
 ## Pluggable by design
 
